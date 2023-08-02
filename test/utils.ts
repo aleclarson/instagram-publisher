@@ -1,5 +1,5 @@
-const sharp = require('sharp');
-const fs = require('fs');
+import fs from 'fs';
+import sharp from 'sharp';
 
 export const FILES_DIR = 'files/';
 
@@ -29,7 +29,5 @@ export function createVideo(f: string): string {
 }
 
 export function getRandomString(): string {
-  return Math.random()
-    .toString(36)
-    .slice(2, 7);
+  return Math.random().toString(36).slice(2, 7);
 }

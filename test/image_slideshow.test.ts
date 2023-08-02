@@ -1,15 +1,14 @@
-import { createImage, FILES_DIR } from './utils';
-// import InstagramPublisher from '../src';
-const InstagramPublisher = require('../src');
-const fs = require('fs');
-const {
-  MIN_2_IMAGES_ERR,
-  MAX_10_IMAGES_ERR,
+import fs from 'fs';
+import InstagramPublisher from '../src';
+import { MAX_CAPTION_LENGTH } from '../src/config';
+import {
   IMAGES_NOT_FOUND_ERR,
   IMAGES_NOT_JPG_ERR,
   IMAGES_WRONG_ASPECT_RATIO_ERR,
-} = require('../src/errors');
-const { MAX_CAPTION_SIZE } = require('../src/config');
+  MAX_10_IMAGES_ERR,
+  MIN_2_IMAGES_ERR,
+} from '../src/errors';
+import { FILES_DIR, createImage } from './utils';
 
 const IP = new InstagramPublisher({
   email: '',
@@ -41,12 +40,12 @@ test('Ensure atleast 2 images are provided', async () => {
 });
 
 test('Ensure caption does not exceed limit', async () => {
-  const long_caption = new Array(MAX_CAPTION_SIZE).join(',');
+  const long_caption = new Array(MAX_CAPTION_LENGTH).join(',');
 
   await expect(
     async () =>
       await IP.createImageSlideshow({ images: [], caption: long_caption })
-  ).rejects.toThrowError(MAX_CAPTION_SIZE);
+  ).rejects.toThrowError(MAX_CAPTION_LENGTH);
 });
 
 test('Ensure max 10 images are provided', async () => {
